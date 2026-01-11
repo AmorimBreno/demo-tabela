@@ -1,0 +1,12 @@
+@import 'tailwindcss';
+
+@theme {
+  /* Fonte para títulos e marca (Arredondada/Amigável) */
+  --font-brand: 'Comfortaa', sans-serif;
+
+  /* Fonte secundária para destaques (Divertida/Moderna) */
+  --font-display: 'Fredoka', sans-serif;
+
+  /* Fonte principal para os DADOS e TABELAS (Limpa/Legível) */
+  --font-sans: 'Karla', sans-serif;
+}
