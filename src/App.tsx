@@ -183,7 +183,7 @@ export default function App() {
             <MetricCard
               title="Retorno"
               value="5.48%"
-              label="CAGR"
+              label="cagr"
               icon={FaArrowTrendDown}
               details={[
                 { name: 'CDI', val: '3.84%' },
@@ -205,13 +205,13 @@ export default function App() {
             <MetricCard
               title="Pior Retorno"
               value="-15.29%"
-              label="Média 21 DU"
+              label="Janelas de 3 anos"
               icon={FaCircleMinus}
             />
             <MetricCard
               title="Acima CDI"
               value="41.6%"
-              label="Média 21 DU"
+              label="Janelas de 5 anos"
               icon={FaPercent}
             />
           </aside>
