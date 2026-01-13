@@ -1,140 +1,15 @@
 import React from 'react';
-import { FaArrowTrendDown } from 'react-icons/fa6';
+import {
+  FaAnglesDown,
+  FaArrowTrendDown,
+  FaCircleMinus,
+  FaPercent,
+} from 'react-icons/fa6';
 import { BiLineChart } from 'react-icons/bi';
-
-interface FormattedValueProps {
-  value: string;
-}
-
-// Componente para formatar cores de números negativos
-const FormattedValue: React.FC<FormattedValueProps> = ({ value }) => {
-  const isNegative = value.toString().includes('-');
-  return (
-    <span className={isNegative ? 'text-red-400 font-medium' : 'text-gray-700'}>
-      {value}
-    </span>
-  );
-};
-
-// Interface para as props do Card
-interface MetricCardProps {
-  title: string;
-  value: string;
-  label: string;
-  // O tipo React.ElementType permite passar o componente do ícone como prop
-  icon: React.ElementType;
-  details?: { name: string; val: string }[];
-}
-
-// Componente de Card da Lateral
-const MetricCard: React.FC<MetricCardProps> = ({
-  title,
-  value,
-  label,
-  icon: Icon,
-  details,
-}) => (
-  <div className="bg-white p-5 border rounded-xl shadow-sm border-l-4 border-l-yellow-400">
-    <div className="flex items-center gap-2 text-gray-500 mb-3">
-      <Icon size={20} className="text-yellow-500" />
-      <span className="font-bold text-xs uppercase tracking-wider">
-        {title}
-      </span>
-    </div>
-    <div className="flex items-baseline gap-2">
-      <span className="text-3xl font-bold tracking-tight text-gray-800">
-        <FormattedValue value={value} />
-      </span>
-      <span className="bg-yellow-100 text-yellow-700 text-[10px] px-2 py-0.5 rounded-full font-bold">
-        {label}
-      </span>
-    </div>
-    {details && (
-      <div className="mt-4 pt-4 border-t text-xs text-gray-400 space-y-2">
-        {details.map((d, i) => (
-          <div key={i} className="flex justify-between">
-            <span>{d.name}</span>
-            <span className="font-medium text-gray-600">{d.val}</span>
-          </div>
-        ))}
-      </div>
-    )}
-  </div>
-);
-
-// Interface para os dados da tabela
-interface TableRowData {
-  name: string;
-  y1: string;
-  y3: string;
-  y5: string;
-  y7: string;
-  y10: string;
-  highlight?: boolean;
-}
-
-// Componente de Tabela Reutilizável
-const PerformanceTable: React.FC<{ title: string; data: TableRowData[] }> = ({
-  title,
-  data,
-}) => (
-  <div className="bg-white border rounded-xs shadow-sm overflow-hidden mb-8 font-sans">
-    <div className="bg-gray-50 px-6 py-2 border-b">
-      <h3 className="font-sans text-gray-800 text-[24px] tracking-wider font-bold">
-        {title}
-      </h3>
-    </div>
-    <div className="overflow-x-auto">
-      <table className="w-full text-sm text-left">
-        <thead>
-          <tr className=" uppercase text-[10px] tracking-widest border-b bg-gray-200/60">
-            <th className="px-6 py-3 font-semibold"> </th>
-            {['1 ano', '3 anos', '5 anos', '7 anos', '10 anos'].map((year) => (
-              <th key={year} className="px-6 py-1 text-center font-semibold">
-                {year}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-gray-100">
-          {data.map((row, idx) => (
-            <tr
-              key={idx}
-              className={
-                row.highlight
-                  ? 'bg-yellow-400/90 font-bold'
-                  : 'odd:bg-gray-200/40 even:bg-white'
-              }
-            >
-              <td
-                className={`px-6 py-1 ${
-                  row.highlight ? 'text-gray-900' : 'text-gray-600 '
-                }`}
-              >
-                {row.name}
-              </td>
-              <td className="px-6 py-1 text-center ">
-                <FormattedValue value={row.y1} />
-              </td>
-              <td className="px-6 py-1 text-center">
-                <FormattedValue value={row.y3} />
-              </td>
-              <td className="px-6 py-1 text-center">
-                <FormattedValue value={row.y5} />
-              </td>
-              <td className="px-6 py-1 text-center">
-                <FormattedValue value={row.y7} />
-              </td>
-              <td className="px-6 py-1 text-center">
-                <FormattedValue value={row.y10} />
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  </div>
-);
+import FormattedValue from './helpers/formatedValue';
+import MetricCard from './components/card';
+import type { TableRowData } from './components/PerformanceTable';
+import PerformanceTable from './components/PerformanceTable';
 
 export default function App() {
   const nominalData: TableRowData[] = [
@@ -269,6 +144,33 @@ export default function App() {
     },
   ];
 
+  const detailsData: TableRowData[] = [
+    {
+      name: '% acima CDI',
+      y1: '39.01%',
+      y3: '34.91%',
+      y5: '41.56%',
+      y7: '53.88%',
+      y10: '26.85%',
+    },
+    {
+      name: '% acima IPCA',
+      y1: '45.28%',
+      y3: '44.43%',
+      y5: '60.15%',
+      y7: '75.65%',
+      y10: '71.55%',
+    },
+    {
+      name: '# observações',
+      y1: '3889',
+      y3: '3369',
+      y5: '2851',
+      y7: '2333',
+      y10: '1557',
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-gray-100 p-4 md:p-10 font-sans">
       <div className="max-w-7xl mx-auto">
@@ -276,14 +178,10 @@ export default function App() {
           <h1 className="text-2xl font-bold text-gray-800">
             Relatório de Performance
           </h1>
-          <p className="text-sm text-gray-500">
-            Análise comparativa de fundos e benchmarks
-          </p>
         </header>
 
         <div className="flex flex-col lg:flex-row gap-8">
-          {/* Sidebar de Cards */}
-          <aside className="w-full lg:w-80 space-y-6 shrink-0">
+          <aside className="w-full lg:w-80 space-y-16 shrink-0">
             <MetricCard
               title="Retorno"
               value="5.48%"
@@ -295,18 +193,28 @@ export default function App() {
               ]}
             />
             <MetricCard
-              title="Pior Drawdown"
+              title="Pior Drawdown - Média"
               value="-20.97%"
               label="Janelas de 1 ano"
-              // Usei uma seta de tendência de baixa para ficar mais semântico
-              icon={FaArrowTrendDown}
+              icon={FaAnglesDown}
             />
             <MetricCard
               title="Volatilidade"
               value="20.27%"
               label="Média 21 DU"
-              // Ícone de gráfico de linha
               icon={BiLineChart}
+            />
+            <MetricCard
+              title="Pior Retorno"
+              value="-15.29%"
+              label="Média 21 DU"
+              icon={FaCircleMinus}
+            />
+            <MetricCard
+              title="Acima CDI"
+              value="41.6%"
+              label="Média 21 DU"
+              icon={FaPercent}
             />
           </aside>
 
@@ -317,6 +225,7 @@ export default function App() {
             {/* Reutilizando os dados apenas para exemplo visual */}
             <PerformanceTable title="CDI+" data={cdiData} />
             <PerformanceTable title="IPCA+" data={ipcaData} />
+            <PerformanceTable title="Detalhes" data={detailsData} />
           </main>
         </div>
       </div>
