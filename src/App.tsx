@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   FaAnglesDown,
   FaArrowTrendDown,
@@ -6,7 +5,6 @@ import {
   FaPercent,
 } from 'react-icons/fa6';
 import { BiLineChart } from 'react-icons/bi';
-import FormattedValue from './helpers/formatedValue';
 import MetricCard from './components/card';
 import type { TableRowData } from './components/PerformanceTable';
 import PerformanceTable from './components/PerformanceTable';
@@ -218,11 +216,8 @@ export default function App() {
             />
           </aside>
 
-          {/* Área Principal das Tabelas */}
           <main className="flex-1 min-w-0">
             <PerformanceTable title="Retorno Nominal" data={nominalData} />
-
-            {/* Reutilizando os dados apenas para exemplo visual */}
             <PerformanceTable title="CDI+" data={cdiData} />
             <PerformanceTable title="IPCA+" data={ipcaData} />
             <PerformanceTable title="Detalhes" data={detailsData} />
