@@ -24,7 +24,7 @@ Para rodar este projeto localmente, você precisará ter o **Node.js** instalado
 
 1.  **Clonar o repositório:**
     ```bash
-    git clone [https://github.com/amorimbreno/demo-tabela.git](https://github.com/amorimbreno/demo-tabela.git)
+    git clone https://github.com/amorimbreno/demo-tabela.git
     ```
 
 2.  **Entrar no diretório do projeto:**
